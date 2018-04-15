@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>ss</title>
+</head>
+<body>
+
+    <div id="userName"></div>
+    普通用户：<br />
+    账号：<input name="account" type="text" value="e">
+    <br />
+    密码：<input name="password" type="password" value="123">
+    <button type="button" id="login">登录</button>
+
+    请假列表：
+
+    <ul id="leaves">
+
+    </ul>
+
+
+</body>
+
+<script src="../static/lib/jquery-1.10.2.min.js" type="text/javascript"></script>
+<script>
+    $(function () {
+
+        $("#login").click(login());
+
+
+    })
+
+    //登录
+    function login(){
+        $.ajax({
+            url:"/user/login",
+            type:"get",
+            data:{"account":$("account").val(),"password":$("password").val()},
+            success:function(resultData){
+                $("userName").html(resultData);
+            }
+        })
+    }
+
+    //查询请假
+    function queryLeave(){
+        $.ajax({
+            url:"/user/queryApply",
+            type:"get",
+            data:{"userId":$("userName").html()},
+            success:function(resultData){
+                $("userName").html(resultData);
+            }
+        })
+    }
+
+
+
+
+
+</script>
+
+
+
+</html>
