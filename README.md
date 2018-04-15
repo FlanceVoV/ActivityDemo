@@ -3,7 +3,7 @@
 # 工作流执行实例
 配合 SpringCloud_Activity项目使用 https://github.com/FlanceVoV/SpringCloud_Activity  
 
-默认提供简单请假流程  
+默认提供简单请假流程    
 整合了springboot可以作为微服务直接注册进入springcloud管理
 
 1.用户登录  
