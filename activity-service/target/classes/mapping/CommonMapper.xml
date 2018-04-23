@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dao.CommonMapper">
+
+    <insert id="saveCommonService" parameterType="java.lang.String" statementType="STATEMENT">
+        INSERT INTO
+        ${tableName}
+          (
+            ${columns}
+          )
+        VALUES
+        (
+          ${values}
+        )
+    </insert>
+
+    <update id="upCommonService" parameterType="java.lang.String" statementType="STATEMENT">
+        UPDATE
+        ${tableName}
+        SET
+        ${values}
+        WHERE
+        1 = 1
+        AND
+        ${param}
+    </update>
+
+
+
+</mapper>

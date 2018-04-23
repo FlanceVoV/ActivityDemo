@@ -1,0 +1,359 @@
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+    名称：<input id="name" name="name" type="text" value="" /><br />
+    内容：<input id="content" name="content" type="text" value="" /><br />
+    是否重填：<input id="resubflag" name="resubflag" type="text" value="" /><br /><br /><br />
+
+    评审意见：<input id="apply_content" name="apply_content" type="text" value="" /><br />
+    评审结果：<input id="apply_result" name="apply_result" type="text" value="0" /><br />
+
+
+    当前流程id：<input id="lcid" name="test" type="text" value="" /><br />
+    当前节点：<input id="test" name="test" type="text" value="" /><br />
+
+
+
+
+    <button id="sb">申报</button><br />
+    <button id="ps">评审</button><br />
+    <button id="ct">重提交</button><br />
+    <button id="ck">查看状态</button><br />
+
+
+    <img id="cklc" src=""/>
+</body>
+
+<script src="http://192.168.1.103:8081/activity/lib/jquery-1.10.2.min.js"></script>
+<script>
+    $(function(){
+
+        $("#sb").click(function(){
+            start_sub();
+        })
+
+        $("#ps").click(function(){
+            apply_sub();
+        })
+
+        $("#ck").click(function(){
+            cklc();
+        })
+
+    })
+
+    function start_sub(){
+        var sUrl = "http://192.168.1.103:8081/activity/autoActiviti/startActiviti";
+        var sType = "post";
+        var oMap = {"name":"123","content":"123","process_code":"test_process"}
+
+        var oData = {"sMap":JSON.stringify(oMap)}
+
+
+        var fSuccess = function(resultData){
+            console.log(resultData)
+            $("#lcid").val(resultData.lcid);
+            cklc();
+        }
+
+        AJAXFUN(sUrl,sType,oData,fSuccess)
+
+    }
+
+    function cklc(){
+        var sPid = $("#lcid").val();
+        var timestamp = Date.parse(new Date());
+
+        $("#cklc").attr("src","http://192.168.1.103:8089/modelCheck/getModelStatus/"+sPid+".jpg?time="+timestamp);
+
+    }
+
+    function apply_sub(){
+        var sPid = $("#lcid").val();
+        var sResult = $("#apply_result").val();
+        var sContent = $("#apply_content").val();
+
+
+        var sUrl = "http://192.168.1.103:8081/activity/autoActiviti/moveActiviti/"+sPid;
+        var sType = "post";
+        var oMap = {"user_id":"123","result":sResult,"process_code":"test_process","apply_content":sContent,"process_id":sPid,"param":["user_id","process_id"]}
+
+        var oData = {"sMap":JSON.stringify(oMap)}
+
+        var fSuccess = function(resultData){
+            console.log(resultData)
+            cklc();
+        }
+
+        AJAXFUN(sUrl,sType,oData,fSuccess)
+    }
+
+
+
+    function AJAXFUN(sUrl,sType,oData,fSuccess){
+        $.ajax({
+            url: sUrl,
+            type: sType,
+            data: oData,
+            success: fSuccess,
+            error: function(result){
+                console.log(result);
+            }
+
+        })
+
+    }
+
+
+</script>
+
+
+</html>-->
+
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+开始日期：<input id="startDate" name="startDate" type="text" value="" /><br />
+结束日期：<input id="endDate" name="endDate" type="text" value="" /><br />
+理由：<input  id="reason"  name="reason" type="text" value=""/><br/>
+是否重填：<input id="resubflag" name="resubflag" type="text" value="" /><br /><br /><br />
+
+评审意见：<input id="apply_content" name="apply_content" type="text" value="" /><br />
+评审结果：<input id="apply_result" name="apply_result" type="text" value="0" /><br />
+
+
+当前流程id：<input id="lcid" name="test" type="text" value="" /><br />
+当前节点：<input id="test" name="test" type="text" value="" /><br />
+
+
+
+
+<button id="sb">申报</button><br />
+<button id="ps">评审</button><br />
+<button id="ct">重提交</button><br />
+<button id="ck">查看状态</button><br />
+
+
+<img id="cklc" src=""/>
+</body>
+
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+
+    var inProcessCode = "process";
+
+    $(function(){
+
+        $("#sb").click(function(){
+            start_sub();
+        })
+
+        $("#ps").click(function(){
+            apply_sub();
+        })
+
+        $("#ck").click(function(){
+            cklc();
+        })
+
+    })
+
+    function start_sub(){
+        var sUrl = "http://192.168.1.103:8081/activity/autoActiviti/startActiviti";
+        var sType = "post";
+        var oMap = {"startDate":"2016-01-01","endDate":"2016-01-02","reason":"有点累","process_code":inProcessCode}
+
+        var oData = {"sMap":JSON.stringify(oMap)}
+
+
+        var fSuccess = function(resultData){
+            console.log(resultData)
+            $("#lcid").val(resultData.lcid);
+            cklc();
+        }
+
+        AJAXFUN(sUrl,sType,oData,fSuccess)
+
+    }
+
+    function cklc(){
+        var sPid = $("#lcid").val();
+        var timestamp = Date.parse(new Date());
+
+        $("#cklc").attr("src","http://192.168.1.103:8089/modelCheck/getModelStatus/"+sPid+".jpg?time="+timestamp);
+
+    }
+
+    function apply_sub(){
+        var sPid = $("#lcid").val();
+        var sResult = $("#apply_result").val();
+        var sContent = $("#apply_content").val();
+
+
+        var sUrl = "http://192.168.1.103:8081/activity/autoActiviti/moveActiviti/"+sPid;
+        var sType = "post";
+        var oMap = {"user_id":"123","result":sResult,"process_code":inProcessCode,"apply_content":sContent,"process_id":sPid,"param":["user_id","process_id"]}
+
+        var oData = {"sMap":JSON.stringify(oMap)}
+
+        var fSuccess = function(resultData){
+            console.log(resultData)
+            cklc();
+        }
+
+        AJAXFUN(sUrl,sType,oData,fSuccess)
+    }
+
+
+
+    function AJAXFUN(sUrl,sType,oData,fSuccess){
+        $.ajax({
+            url: sUrl,
+            type: sType,
+            data: oData,
+            success: fSuccess,
+            error: function(result){
+                console.log(result);
+            }
+
+        })
+
+    }
+
+
+</script>-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+标题：<input id="title" name="startDate" type="text" value="" /><br />
+内容：<input id="content" name="endDate" type="text" value="" /><br />
+
+评审意见：<input id="apply_content" name="apply_content" type="text" value="" /><br />
+评审结果：<input id="apply_result" name="apply_result" type="text" value="0" /><br />
+
+
+当前流程id：<input id="lcid" name="test" type="text" value="" readonly/><br />
+当前节点：<input id="test" name="test" type="text" value="" readonly/><br />
+
+
+
+
+<button id="sb">开始流程</button><br />
+<button id="ps">移动流程</button><br />
+<button id="ck">查看状态</button><br />
+
+
+<img id="cklc" src=""/>
+</body>
+
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+
+    var inProcessCode = "apply_online";
+
+    $(function(){
+
+        $("#sb").click(function(){
+            start_sub();
+        })
+
+        $("#ps").click(function(){
+            apply_sub();
+        })
+
+        $("#ck").click(function(){
+            cklc();
+        })
+
+    })
+
+    function start_sub(){
+        var sUrl = "http://192.168.1.103:8081/activity/autoActiviti/startActiviti";
+        var sType = "post";
+        var sContent = $("#content").val();
+        var sTitle = $("#title").val();
+
+        var oMap = {"content":sContent,"title":sTitle,"process_code":inProcessCode,"user_id":"123"}
+
+        var oData = {"sMap":JSON.stringify(oMap)}
+
+
+        var fSuccess = function(resultData){
+            console.log(resultData)
+            $("#lcid").val(resultData.lcid);
+            cklc();
+        }
+
+        AJAXFUN(sUrl,sType,oData,fSuccess)
+
+    }
+
+    function cklc(){
+        var sPid = $("#lcid").val();
+        var timestamp = Date.parse(new Date());
+
+        $("#cklc").attr("src","http://192.168.1.103:8089/modelCheck/getModelStatus/"+sPid+".jpg?time="+timestamp);
+
+    }
+
+    function apply_sub(){
+        var sPid = $("#lcid").val();
+        var sResult = $("#apply_result").val();
+        var sContent = $("#apply_content").val();
+
+
+        var sUrl = "http://192.168.1.103:8081/activity/autoActiviti/moveActiviti/"+sPid;
+        var sType = "post";
+        var oMap = {"user_id":"123","result":sResult,"process_code":inProcessCode,"apply_content":sContent,"process_id":sPid,"param":["user_id","process_id"]}
+
+        var oData = {"sMap":JSON.stringify(oMap)}
+
+        var fSuccess = function(resultData){
+            console.log(resultData);
+            $("#test").val(resultData.nodeName);
+            cklc();
+        }
+
+        AJAXFUN(sUrl,sType,oData,fSuccess)
+    }
+
+
+
+    function AJAXFUN(sUrl,sType,oData,fSuccess){
+        $.ajax({
+            url: sUrl,
+            type: sType,
+            data: oData,
+            success: fSuccess,
+            error: function(result){
+                console.log(result);
+            }
+
+        })
+
+    }
+
+
+</script>
+
+
+
+</html>
